@@ -1,7 +1,7 @@
 package time
 
 import (
-	"github.com/ready-steady/simulation/system"
+	"github.com/simulated-reality/system"
 )
 
 // List represents a list scheduler.
