@@ -1,6 +1,6 @@
 # Time [![Build Status][travis-img]][travis-url]
 
-The package provides algorithms for simulating applications running on
+The package provides algorithms for scheduling applications running on
 multiprocessor platforms.
 
 ## [Documentation][doc]
