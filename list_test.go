@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/ready-steady/assert"
-	"github.com/simulated-reality/system"
+	"github.com/turing-complete/system"
 )
 
 const (

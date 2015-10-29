@@ -11,6 +11,6 @@ multiprocessor platforms.
 2. Implement your idea.
 3. Open a pull request.
 
-[travis-img]: https://travis-ci.org/simulated-reality/time.svg
-[travis-url]: https://travis-ci.org/simulated-reality/time
-[doc]: http://godoc.org/github.com/simulated-reality/time
+[travis-img]: https://travis-ci.org/turing-complete/time.svg
+[travis-url]: https://travis-ci.org/turing-complete/time
+[doc]: http://godoc.org/github.com/turing-complete/time

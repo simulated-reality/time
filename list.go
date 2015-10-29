@@ -1,7 +1,7 @@
 package time
 
 import (
-	"github.com/simulated-reality/system"
+	"github.com/turing-complete/system"
 )
 
 // List represents a list scheduler.
