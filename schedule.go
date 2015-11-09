@@ -11,3 +11,12 @@ type Schedule struct {
 	Start   []float64
 	Finish  []float64
 }
+
+// Duration computes the difference between Finish and Start.
+func (self *Schedule) Duration() []float64 {
+	time := make([]float64, len(self.Start))
+	for i := range time {
+		time[i] = self.Finish[i] - self.Start[i]
+	}
+	return time
+}
