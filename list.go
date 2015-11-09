@@ -23,9 +23,9 @@ func NewList(platform *system.Platform, application *system.Application) *List {
 // Compute constructs a schedule according to the given priority vector. The
 // length of this vector equals to the number of tasks in the system, and
 // smaller values correspond to higher priorities.
-func (l *List) Compute(priority []float64) *Schedule {
-	cores := l.platform.Cores
-	tasks := l.application.Tasks
+func (self *List) Compute(priority []float64) *Schedule {
+	cores := self.platform.Cores
+	tasks := self.application.Tasks
 
 	nc := uint(len(cores))
 	nt := uint(len(tasks))
@@ -44,11 +44,11 @@ func (l *List) Compute(priority []float64) *Schedule {
 	var span float64
 	var ready bool
 
-	size := uint(len(l.roots))
+	size := uint(len(self.roots))
 
 	// According to the benchmarks, keeping it sorted is not worth it.
 	pool := make([]uint, size, nt)
-	copy(pool, l.roots)
+	copy(pool, self.roots)
 
 	for size > 0 {
 		// Find the earliest available core.
@@ -131,9 +131,9 @@ func (l *List) Compute(priority []float64) *Schedule {
 
 // Delay constructs a new schedule based on an old one by adding delays to the
 // execution times of the tasks.
-func (l *List) Delay(schedule *Schedule, delay []float64) *Schedule {
-	cores := l.platform.Cores
-	tasks := l.application.Tasks
+func (self *List) Delay(schedule *Schedule, delay []float64) *Schedule {
+	cores := self.platform.Cores
+	tasks := self.application.Tasks
 
 	nt := uint(len(tasks))
 
@@ -145,15 +145,15 @@ func (l *List) Delay(schedule *Schedule, delay []float64) *Schedule {
 		duration[tid] = cores[cid].Time[tasks[tid].Type] + delay[tid]
 	}
 
-	return l.Update(schedule, duration)
+	return self.Update(schedule, duration)
 }
 
 // Update constructs a new schedule based on an old one by setting the execution
 // times of the tasks to new values.
-func (l *List) Update(schedule *Schedule, duration []float64) *Schedule {
-	tasks := l.application.Tasks
+func (self *List) Update(schedule *Schedule, duration []float64) *Schedule {
+	tasks := self.application.Tasks
 
-	nc := uint(len(l.platform.Cores))
+	nc := uint(len(self.platform.Cores))
 	nt := uint(len(tasks))
 
 	start := make([]float64, nt)
