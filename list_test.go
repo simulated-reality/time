@@ -15,10 +15,10 @@ const (
 
 func TestListCompute(t *testing.T) {
 	platform, application, _ := system.Load(findFixture("002_040"))
-	prof := system.NewProfile(platform, application)
+	profile := system.NewProfile(platform, application)
 
 	list := NewList(platform, application)
-	schedule := list.Compute(prof.Mobility)
+	schedule := list.Compute(profile.Mobility)
 
 	mapping := []uint{
 		0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0,
@@ -55,19 +55,22 @@ func TestListCompute(t *testing.T) {
 		}
 	}
 
+	assert.Equal(schedule.Cores, uint(2), t)
+	assert.Equal(schedule.Tasks, uint(40), t)
+	assert.EqualWithin(schedule.Span, span, 1e-15, t)
+
 	assert.Equal(schedule.Mapping, mapping, t)
 	assert.Equal(schedule.Order, order, t)
 	assert.EqualWithin(schedule.Start, start, 1e-15, t)
 	assert.EqualWithin(schedule.Finish, finish, 1e-15, t)
-	assert.EqualWithin(schedule.Span, span, 1e-15, t)
 }
 
 func TestListDelay(t *testing.T) {
 	platform, application, _ := system.Load(findFixture("002_040"))
-	prof := system.NewProfile(platform, application)
+	profile := system.NewProfile(platform, application)
 
 	list := NewList(platform, application)
-	schedule := list.Compute(prof.Mobility)
+	schedule := list.Compute(profile.Mobility)
 
 	delay := []float64{
 		0.0352, 0.0831, 0.0585, 0.0550, 0.0917, 0.0286, 0.0757, 0.0754,
@@ -98,14 +101,14 @@ func TestListDelay(t *testing.T) {
 
 func TestListDelayDummy(t *testing.T) {
 	platform, application, _ := system.Load(findFixture("002_040"))
-	prof := system.NewProfile(platform, application)
+	profile := system.NewProfile(platform, application)
 
 	list := NewList(platform, application)
-	sched1 := list.Compute(prof.Mobility)
-	sched2 := list.Delay(sched1, make([]float64, len(sched1.Start)))
+	schedule1 := list.Compute(profile.Mobility)
+	schedule2 := list.Delay(schedule1, make([]float64, len(schedule1.Start)))
 
-	assert.Equal(sched2.Start, sched1.Start, t)
-	assert.Equal(sched2.Finish, sched1.Finish, t)
+	assert.Equal(schedule2.Start, schedule1.Start, t)
+	assert.Equal(schedule2.Finish, schedule1.Finish, t)
 }
 
 func BenchmarkListCompute_002_040(b *testing.B) {
@@ -127,22 +130,22 @@ func BenchmarkListDelay_032_640(b *testing.B) {
 func benchmarkCompute(name string, b *testing.B) {
 	platform, application, _ := system.Load(findFixture(name))
 
-	prof := system.NewProfile(platform, application)
+	profile := system.NewProfile(platform, application)
 	list := NewList(platform, application)
 
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		list.Compute(prof.Mobility)
+		list.Compute(profile.Mobility)
 	}
 }
 
 func benchmarkDelay(name string, b *testing.B) {
 	platform, application, _ := system.Load(findFixture(name))
 
-	prof := system.NewProfile(platform, application)
+	profile := system.NewProfile(platform, application)
 	list := NewList(platform, application)
-	schedule := list.Compute(prof.Mobility)
+	schedule := list.Compute(profile.Mobility)
 	delay := make([]float64, len(schedule.Start))
 
 	b.ResetTimer()

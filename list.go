@@ -118,11 +118,14 @@ func (l *List) Compute(priority []float64) *Schedule {
 	}
 
 	return &Schedule{
+		Cores: nc,
+		Tasks: nt,
+		Span:  span,
+
 		Mapping: mapping,
 		Order:   order,
 		Start:   start,
 		Finish:  finish,
-		Span:    span,
 	}
 }
 
@@ -185,11 +188,13 @@ func (l *List) Update(schedule *Schedule, duration []float64) *Schedule {
 	}
 
 	return &Schedule{
-		// FIXME: Do not be greedy! Make a copy!
-		Mapping: schedule.Mapping,
-		Order:   schedule.Order,
+		Cores: nc,
+		Tasks: nt,
+		Span:  span,
+
+		Mapping: schedule.Mapping, // Make a copy?
+		Order:   schedule.Order,   // Make a copy?
 		Start:   start,
 		Finish:  finish,
-		Span:    span,
 	}
 }
