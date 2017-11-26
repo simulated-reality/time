@@ -57,12 +57,12 @@ func TestListCompute(t *testing.T) {
 
 	assert.Equal(schedule.Cores, uint(2), t)
 	assert.Equal(schedule.Tasks, uint(40), t)
-	assert.EqualWithin(schedule.Span, span, 1e-15, t)
+	assert.Close(schedule.Span, span, 1e-15, t)
 
 	assert.Equal(schedule.Mapping, mapping, t)
 	assert.Equal(schedule.Order, order, t)
-	assert.EqualWithin(schedule.Start, start, 1e-15, t)
-	assert.EqualWithin(schedule.Finish, finish, 1e-15, t)
+	assert.Close(schedule.Start, start, 1e-15, t)
+	assert.Close(schedule.Finish, finish, 1e-15, t)
 }
 
 func TestListDelay(t *testing.T) {
@@ -95,8 +95,8 @@ func TestListDelay(t *testing.T) {
 
 	schedule = list.Delay(schedule, delay)
 
-	assert.EqualWithin(schedule.Start, start, 1e-15, t)
-	assert.EqualWithin(schedule.Finish, finish, 2e-15, t)
+	assert.Close(schedule.Start, start, 1e-15, t)
+	assert.Close(schedule.Finish, finish, 2e-15, t)
 }
 
 func TestListDelayDummy(t *testing.T) {
